@@ -1,0 +1,46 @@
+.bottomLine {
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding-bottom: 0.8rem;
+    margin-bottom: 1px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.menu__ul>li>a>h1 {
+    animation: fade 2s linear;
+    transition: all 0.5 ease-in-out;
+    color: var(--black);
+    font-weight: 200;
+}
+
+.menu__ul__social-media {
+    display: flex;
+    align-items: center;
+}
+
+.menu__ul__social-media>li {
+    padding-left: 5px;
+}
+
+.menu__ul__mode {
+    display: flex;
+    align-items: center;
+}
+
+.menu__ul__page-title {
+    margin-right: 5px;
+}
+
+i {
+    cursor: pointer;
+}
+
+#sun {
+    display: none;
+}
