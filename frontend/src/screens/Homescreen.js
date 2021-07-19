@@ -1,21 +1,27 @@
 import './Homescreen.css'
 import {useEffect, useState} from 'react';
 
-/*TODO: use fs module to create an file in json to put all the news in database*/
-
 // Components
 import Navbar from '../components/Navbar';
 import News from '../components/News';
+
+/* REDUX: Actions, Hooks */
+// Actions
+import {getNews, postNews } from '../redux/actions/newsActions';
+
+//Hooks
+import {useSelector, useDispatch} from 'react-redux';
 
 // Token
 require("dotenv").config();
 
 const Homescreen = () => {
-    const [news, setNews] = useState([{}]);
     const [multimedia, setMultimedia] = useState([{}]);
-
+    const dispatch = useDispatch();
+    const news = useSelector((state) => state.news); 
+    
     const NYT_TOKEN = process.env.REACT_APP_NYT_API_TOKEN;
-
+    
     const fetchMultimedia = (results) => {
         const mt = results.map((news) => news.multimedia);
             const img = [];
@@ -39,30 +45,36 @@ const Homescreen = () => {
             const newsFromApi = await fetchData();
             //Array of news extraction result
             const {results} = newsFromApi;
-            //console.log(JSON.stringify(results));
             const mt = fetchMultimedia(results);
 
-            setNews(results);
+            dispatch(postNews(results));
             setMultimedia(mt);
         }
         fetchDataApi();
-    }, [])
+        
+        // Método Post no Servidor para as novas notícias
+        // Método get no Servidor para requisitar as novas notícias
+    }, [dispatch])
     
     const fetchData = async() => {
         // https://api.nytimes.com/svc/news/v3/content/all/all.json?api-key={NYT_TOKEN}
         const res = await fetch(`https://api.nytimes.com/svc/news/v3/content/all/all.json?api-key=${NYT_TOKEN}`)
-        const data = await res.json()        
+        const data = await res.json()   
+        const {results} = data;
         return data
     }
+
     return (
+        <>{
+        news.length !== 0 ? 
         <div className="homescreen">
             <Navbar />
             <h2 className="homescreen__title">Lastest News</h2>
             <h3 className="homescreen__tagNews"></h3>
             <div className="homescreen__news">
-                {news.map((news, index) => (
+                {news[0].map((news, index) => (
                         <News
-                        key={news.slug_name}
+                        key={news._id}
                         multi={news.slug_name && multimedia.map(m => m.slug_name) ? multimedia.map(m => m.url)[index] : ""}
                         title={news.title}
                         abstract={news.abstract}
@@ -74,6 +86,8 @@ const Homescreen = () => {
                 )}
             </div>
         </div>
+        : <div className="loading-screen"><h1>Loading</h1></div>}
+        </>
     )
 }
 

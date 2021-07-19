@@ -1,24 +1,80 @@
 const mongoose = require('mongoose');
 
 const newsSchema = new mongoose.Schema({
-    id: {
-        type: mongoose.ObjectId,
-        auto: true,
-        required: true,
-        unique: true
+    slug_name: {
+        type: String
+    },
+    section: {
+        type: String,
+    },
+    subsection: {
+        type: String
     },
     title: {
-        type: String,
-        required: true
+        type: String
     },
-    creator: {
-        type: String,
-        required: true,
+    abstract: {
+        type: String
     },
-    createdAt: {
+    url: {
+        type: String
+    },
+    byline: {
+        type: String,
+        capitalize: true
+    },
+    thumbnail_standard: {
+        type: String
+    },
+    item_type: {
+        type: String
+    },
+    source: {
+        type: String
+    },
+    updated_date: {
+        type: Date
+    },
+    created_date: {
         type: Date,
-        required: true,
+        /*default: new Date()*/
+    },
+    published_date: {
+        type: Date,
+        /*default: new Date()*/
+    },
+    first_published_date: {
+        type: Date
+    },
+    material_type_facet: {
+        type: String
+    },
+    kicker: {
+        type: String
+    },
+    subheadline: {
+        type: String
+    },
+    des_facet: {
+        type: [String]
+    },
+    org_facet: {
+        type: [String]
+    },
+    per_facet: {
+        type: [String]
+    },
+    geo_facet: {
+        type: [String]
+    },
+    related_urls: {
+        type: String
+    },
+    multimedia: {
+        type: [Object]
     }
 });
 
-module.export = newsSchema;
+const News = mongoose.model('news', newsSchema);
+
+module.exports = News;

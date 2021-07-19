@@ -1,3 +1,9 @@
+.loading-screen {
+    max-width: 1300px;
+    margin: 43vh auto;
+    text-align: center;
+}
+
 .homescreen {
     max-width: 1300px;
     margin: 1rem auto;
