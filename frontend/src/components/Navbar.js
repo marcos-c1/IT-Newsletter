@@ -16,7 +16,7 @@ const Navbar = () => {
         const lastNews = document.querySelector(".homescreen__title");
         const news = document.querySelector(".news");
         
-        if (body.style.background === "var(--offwhite)") {
+        if (moon.style.display !== "none") {
             moon.style.display = "none";
             sun.style.display = "block";
             body.style.background = "var(--black)";
